@@ -1,0 +1,5 @@
+INSERT INTO public.bazar(
+	 nombre, descripcion, categoria, stock, precio, estado)
+	VALUES ( 'casaca', 'casaca azul', 'uniforme', 15 , 12.20 , 's');
+
+select * from public.bazar
