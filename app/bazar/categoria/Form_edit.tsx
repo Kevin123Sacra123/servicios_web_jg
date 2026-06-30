@@ -27,7 +27,7 @@ function Form_edit() {
 
     const handleSumbit = async (e) => {
         e.preventDefault();
-        const res = await axios.post('http://localhost:4000/bazar/categorias/crear', categoria);
+        const res = await axios.post('http://localhost:4000/bazar/categoria/crear', categoria);
         console.log(res)
         router.refresh();
         router.push('/bazar/categoria');

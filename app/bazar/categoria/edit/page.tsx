@@ -10,7 +10,7 @@ import Image from "next/image";
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { FaFloppyDisk } from "react-icons/fa6";
-
+import Select_categorias from "@/components/Select_categorias";
 
 function Principal() {
     const frameworks = ["Uniforme", "robotica", "Nuxt.js", "Remix", "Astro"]

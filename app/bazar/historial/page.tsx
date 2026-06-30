@@ -22,7 +22,7 @@ export default function Principal() {
     const [date, setDate] = React.useState<Date>()
 
     return(
-        <div className="flex">
+        <div className="flex min-h-screen bg-gray-100">
             <Navegador />
             <div className="content">
                 <main className="flex-1 overflow-auto">

@@ -82,28 +82,28 @@ export const deleteUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     try{
         const id = parseInt(req.params.id);
-        const { name, email } = req.body;
-        const consulta = `UPDATE public.users SET name = $1, email = $2 WHERE id = $3 RETURNING *`;
-        const valores = [name, email, id];
+        const { direccion, telefono,} = req.body;
+        const consulta = `UPDATE public.usuarios SET direccion = $1, telefono = $2 WHERE id_usuarios = $3 RETURNING *`;
+        const valores = [direccion ,telefono, id];
         const result = await pool.query(consulta, valores);
         if(result.rows.length === 0){
             return res.status(404).json({
                 exito: false,
                 mensaje: "no hay XD",
-                error: result.rows
+                data: result.rows
             });
         }
-        res.status(201).json({
+        res.status(200).json({
             exito: true,
             mensaje: "actualizado",
-            error: result.rows[0]
+            data: result.rows[0]
         });
         
     }catch(error){
         console.log(error);
         res.status(500).json({
             exito: false,
-            mensaje: "error al crear usuario",
+            mensaje: "error al actualizar usuario",
             error: error.message
         })
     }

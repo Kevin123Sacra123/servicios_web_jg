@@ -43,7 +43,7 @@ export const createCategoria = async (req, res) => {
 
 export const deleteCategoria = async (req, res) => {
     const { id } = req.params
-    const result = await pool.query('DELETE FROM public.categoria WHERE id = $1', [id]);
+    const result = await pool.query('DELETE FROM public.categoria WHERE id_categoria = $1', [id]);
     if (result.length === 0){
         return res.status(404).json({
             mesage: "usuario no encontrado"
@@ -53,11 +53,31 @@ export const deleteCategoria = async (req, res) => {
 };
 
 export const updateCategoria = async (req, res) => {
-    const { id } = req.params;
-    const data = req.body;
-
-    const { rows } = await pool.query(
-        "UPDATE public.categoria SET name = $1, email = $2 WHERE id = $3 RETURNING", [data.name, data.email, id]
-    );
-    return res.json(rows[0]);
+    try{
+        const id = parseInt(req.params.id);
+        const { nombre, descripcion } = req.body;
+        const consulta = `UPDATE public.categoria SET nombre = $1, descripcion = $2 WHERE id_categoria = $3 RETURNING`;
+        const valores = [nombre, descripcion, id];
+        const result = await pool.query(consulta, valores);
+        if(result.rows.length === 0){
+            return res.status(404).json({
+                exito: false,
+                mensaje: "no hay categoria",
+                error: result.rows
+            });
+        }
+        res.status(201).json({
+            exito: true,
+            mensaje: "actualizado",
+            error: result.rows[0]
+        });
+        
+    }catch(error){
+        console.log(error);
+        res.status(500).json({
+            exito: false,
+            mensaje: "error al actualizar",
+            error: error.message
+        })
+    }
 };

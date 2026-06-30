@@ -1,22 +1,16 @@
 import Navegador from "@/components/Navegador_bazar";
-import "./estilo.css"
 import axios from "axios";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator, } from "@/components/ui/breadcrumb";
 import {  Table,  TableBody,  TableCaption,  TableCell,  TableFooter,  TableHead,  TableHeader,  TableRow,} from "@/components/ui/table"
-import {Textarea} from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
-import { FaTrash } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
-import ModalCategorias from "@/components/ModalCategorias";
 import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
-import { FaRegFloppyDisk } from "react-icons/fa6";
 import {  InputGroup,  InputGroupAddon,  InputGroupInput,} from "@/components/ui/input-group"
 import { LuSearch } from "react-icons/lu";
 import Form_edit from "./Form_edit";
+import Alerta_categoria from "./alerta_cate";
 
 async function loadCategorias() {
   const { data } = await axios.get('http://localhost:4000/bazar/categorias')
@@ -25,8 +19,9 @@ async function loadCategorias() {
 
 async function Principal() {
     const categorias = await loadCategorias();
+
     return (
-    <div className="flex bg-[#f5f6fa] h-full">
+    <div className="flex bg-[#f5f6fa] min-h-screen">
         <Navegador />
         <section className="w-full p-5 pb-4">
             <Breadcrumb className="p-5 pb-5">
@@ -44,7 +39,6 @@ async function Principal() {
                 <div className="bg-[#f5f6fa]">
                    <Form_edit />
                 </div>
-
                 <div className="w-full">
                     <div className="flex justify-between items-center pr-8">
                         <h2 className="text-4xl font-bold text-[#17337d]">Resumen de Categorías</h2>
@@ -77,9 +71,7 @@ async function Principal() {
                                                 <FaPencilAlt />
                                             </Button>
                                             <ButtonGroupSeparator />
-                                            <Button className="text-slate-400 hover:text-[#7d1717] border border-[#7d1717]">
-                                                <FaTrash />
-                                            </Button>
+                                            <Alerta_categoria id={categoria.id_categoria} nombre={categoria.nombre} ></Alerta_categoria>
                                         </ButtonGroup>
                                     </TableCell>
                                 </TableRow>
@@ -104,13 +96,7 @@ async function Principal() {
                     </div>
                 </div>
             </div>
-
-            <div className="grid grid-cols-3 gap-6 mt-8 p-5">
-                <div className="bg-white border rounded-xl p-6">
-                    <div className="w-12 h-12 rounded-md bg-[#17337d] text-white flex items-center justify-center"></div>
-                    <h3 className="font-semibold text-[#17337d] mt-5">Identidad Visual</h3>
-                    <p className="text-slate-500 mt-3">Los colores distintivos ayudan a los padres a identificar rápidamente las secciones.</p>
-                </div>
+            <div className="grid grid-cols-2 gap-6 mt-8 p-5">
                 <div className="bg-white border rounded-xl p-6">
                     <div className="w-12 h-12 rounded-md bg-slate-200text-slate-700 flex items-center justify-center"></div>
                     <h3 className="font-semibold text-[#17337d] mt-5">Métricas de Venta</h3>

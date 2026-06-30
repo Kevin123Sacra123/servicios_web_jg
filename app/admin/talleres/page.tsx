@@ -17,10 +17,6 @@ export default function Principal() {
             <div className="bg-slate-100">
                 <div className="flex min-h-screen">
                     <section className="flex-1 p-8">
-                        <p className="text-sm text-slate-400 font-medium">
-                            Gestión Académica
-                            <span className="text-[#19398A]">Talleres</span>
-                        </p>
                         <div className="flex justify-between items-start mt-3">
                             <div>
                                 <h1 className="text-5xl font-bold text-slate-800">Gestión de Talleres</h1>

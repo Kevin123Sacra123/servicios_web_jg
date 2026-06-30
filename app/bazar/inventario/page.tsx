@@ -1,11 +1,9 @@
 /*"use client" */
-
 import Navegador from "@/components/Navegador_bazar";
 import axios from "axios";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { CiCirclePlus } from "react-icons/ci";
 import { FaPencilAlt } from "react-icons/fa";
-import { FaTrashAlt } from "react-icons/fa";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { LuInbox } from "react-icons/lu";
@@ -20,19 +18,7 @@ import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, Table
 import Image from "next/image";
 import logo from '../../../img/logo.png'
 import { ScrollArea } from "@/components/ui/scroll-area";
-import ModalProducto from "@/components/ModalProducto";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { GoAlertFill } from "react-icons/go";
+import Alerta from "./alerta";
 
 async function loadProducts() {
   const { data } = await axios.get('http://localhost:4000/bazar/inventario')
@@ -43,7 +29,7 @@ async function Principal() {
   const products = await loadProducts();
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen bg-gray-100">
       <Navegador />
       <div className="flex justify-center">
         <div className="min-h-screen border-l-4 border-blue-900">
@@ -82,8 +68,6 @@ async function Principal() {
             <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
               <div className="overflow-x-auto">
                 <Table className="w-full">
-                  <ScrollArea className="h-[400px] w-full rounded-md p-4">
-
                     <TableHeader className="bg-gray-50">
                       <TableRow className="text-left text-sm text-blue-900">
                         <TableHead className="px-6 py-4">Producto</TableHead>
@@ -116,38 +100,13 @@ async function Principal() {
                                 <FaPencilAlt /> 
                               </Link>
                             </Button>
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <Button className="text-gray-600 border border-red-600 rounded-2xl hover:text-red-600 hover:text-white hover:bg-red-600"><FaTrashAlt /> </Button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent className="bg-white">
-                                <AlertDialogHeader className="">
-                                  <AlertDialogTitle className="">
-                                    <p className="text-red-500 text-2xl ">¿Estas seguro de eliminar el producto? </p>
-                                    <p className="text-red-500 text-center text-xl">{product.nombre}</p>
-                                  </AlertDialogTitle>
-                                  <AlertDialogDescription className="text-left text-lg">
-                                    Esta acción no se puede deshacer.
-                                    ¿Estás seguro de que deseas eliminar permanentemente este producto del inventario?
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter className="flex items-center justify-center">
-                                  <AlertDialogAction className="bg-red-600 text-white" >
-                                    Eliminar
-                                  </AlertDialogAction>
-                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
-
+                            <Alerta id={product.id_product} nombre={product.nombre} ></Alerta>
                           </ButtonGroup>
                         </TableCell>
                       </TableRow>
                       ))}
                       
                     </TableBody>
-                    
-                    </ScrollArea>
                     <TableFooter className="">
                       <TableRow className="text-sm text-gray-500 flex items-center justify-end">
                         <TableCell>Mostrando 4 de 142 productos</TableCell>

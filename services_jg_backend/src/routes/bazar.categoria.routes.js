@@ -5,12 +5,12 @@ const router = Router();
 
 router.get('/bazar/categorias', getCategorias);
 
-router.get('/bazar/categorias/:id', getCategoriaID);
+router.get('/bazar/categoria/:id', getCategoriaID);
 
-router.post('/bazar/categorias/crear', createCategoria);
+router.post('/bazar/categoria/crear', createCategoria);
 
-router.delete('/bazar/categorias/:id', deleteCategoria);
+router.delete('/bazar/categoria/:id', deleteCategoria);
 
-router.put('/bazar/categorias/:id', updateCategoria);
+router.put('/bazar/categoria/:id', updateCategoria);
 
 export default router;

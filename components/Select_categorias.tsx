@@ -20,15 +20,13 @@ function Select_categorias() {
     }, []);
     
     return(
-        
-            <SelectGroup className="bg-white">
-                {categorias.map(categoria =>(
-                    <SelectItem key={categoria.id_categoria} value={categoria.nombre}>
-                        {categoria.nombre}
-                    </SelectItem>
-                ))}
-            </SelectGroup>
-        
+        <SelectGroup className="bg-white">
+            {categorias.map(categoria =>(
+                <SelectItem key={categoria.id_categoria} value={categoria.nombre}>
+                    {categoria.nombre}
+                </SelectItem>
+            ))}
+        </SelectGroup>
     )
 }
 export default Select_categorias;

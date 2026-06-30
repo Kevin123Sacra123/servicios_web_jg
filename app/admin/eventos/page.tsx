@@ -17,9 +17,16 @@ import { FaArrowLeft } from "react-icons/fa";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { TbConfettiFilled } from "react-icons/tb";
 import Link from "next/link";
+import axios from "axios";
 
 
-export default function Principal() {
+async function loadEventos() {
+    const { data } = await axios.get('http://localhost:4000/eventos')
+    return data;
+}
+
+async function Principal() {
+    const eventos = await loadEventos();
   return (
   <div className="flex min-h-full bg-gray-100">
     <Navegador />
@@ -32,7 +39,6 @@ export default function Principal() {
               <p className="text-slate-500 mt-3">Administre el calendario académico y eventos especiales de la institución.</p>
             </div>
             <div className="flex gap-4">
-              <Button className="border border-white px-7 py-4 rounded-xl flex items-center gap-3 bg-white text-[#19398A] h-[50px]"><FaRegCalendarAlt />Ver Calendario</Button>
               <Link href={'/admin/eventos/crear'} className="bg-[#19398A] text-white px-7 pt-2 pb-2  rounded-xl font-bold h-[50px] ">+ Crear Nuevo Evento</Link>
             </div>
           </div>
@@ -75,7 +81,6 @@ export default function Principal() {
                   <FaMagnifyingGlass className="text-muted-foreground" />
                 </InputGroupAddon>
               </InputGroup>
-              <Button className="outline">Filtar</Button>
             </Field>
             <Table className="w-full">
               <TableHeader className="bg-slate-50">
@@ -88,18 +93,19 @@ export default function Principal() {
                 </TableRow>
               </TableHeader>
               <TableBody className="divide-y">
+                {eventos.map(event => (
                 <TableRow className="hover:bg-slate-50">
                   <TableCell className="px-6 py-5">
                     <div className="flex gap-4">
                       <Image src={logo} alt="logo" className="w-16 h-16 rounded-lg object-cover" />
                       <div>
-                        <h3 className="font-bold">Día del Padre</h3>
-                        <p className="text-slate-400">Celebración Anual Escolar</p>
+                        <h3 className="font-bold">{event.nombre}</h3>
+                        <p className="text-slate-400">{event.descripcion}</p>
                       </div>
                     </div>
                   </TableCell>
                   <TableCell><span className="bg-green-100 text-green-700 px-4 py-2 rounded-full">● Active</span></TableCell>
-                  <TableCell >15 Jun 2024</TableCell>
+                  <TableCell>{event.fecha}</TableCell>
                   <TableCell>
                     <div className="flex">
                       <Image src={logo} alt="logo" className="w-10 h-10 rounded-full border-2 border-white" />
@@ -115,6 +121,7 @@ export default function Principal() {
                     </ButtonGroup>
                   </TableCell>
                 </TableRow>
+                ))}
               </TableBody>
               <TableFooter className="">
                 <TableRow>
@@ -149,3 +156,5 @@ export default function Principal() {
   </div>
   )
 }
+
+export default Principal;

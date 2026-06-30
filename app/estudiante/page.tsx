@@ -1,24 +1,18 @@
 "use client"
 
 import Navegador from "@/components/Navegador_estudiante";
-import { AiOutlineProduct } from "react-icons/ai";
-import { IoDocumentOutline } from "react-icons/io5";
-import { IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
-import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
-import { FaEye } from "react-icons/fa";
-import datos from "@/app/data.json"
-import { useEffect, useRef, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import datos_json from "@/app/data.json"
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Principal() {
   const [Datausers, setDatauser] = useState([]);
-  const data_user = datos
+  const data_json = datos_json
   useEffect(() => {
       async function loadData() {
           try {
-              const { data } = await axios.get(`http://localhost:4000/users/${data_user.id_users}`)
+              const { data } = await axios.get(`http://localhost:4000/users/${data_json.id_users}`)
               setDatauser(data);
           } catch (error) {
               console.log(error);
@@ -54,7 +48,7 @@ export default function Principal() {
                         <p className="">DNI: {datos_user.DNI}</p>
                     </div>
                     <div className="">
-                        <Link href={`/estudiante/ver/${data_user.id_usuarios}`} className="w-full rounded-lg p-4 flex items-center justify-between bg-indigo-100 hover:bg-gray-50">
+                        <Link href={`/estudiante/ver/${datos_user.id_usuarios}`} className="w-full rounded-lg p-4 flex items-center justify-between bg-indigo-100 hover:bg-gray-50">
                             <div className="flex items-center gap-4 ">
                                 <span className="font-medium text-blue-900">Ver perfil</span>
                             </div>

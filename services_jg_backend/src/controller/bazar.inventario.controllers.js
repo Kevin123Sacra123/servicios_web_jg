@@ -55,14 +55,14 @@ export const deleteProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
     try{
         const id = parseInt(req.params.id);
-        const { name, email } = req.body;
-        const consulta = `UPDATE public.users SET name = $1, email = $2 WHERE id = $3 RETURNING *`;
-        const valores = [name, email, id];
+        const { nombre, descripcion, categoria, stock, precio, estado } = req.body;
+        const consulta = `UPDATE public.inventario SET nombre = $1, descripcion = $2, categoria = $3, stock = $4, precio = $5, estado = $6 WHERE id_product = $7 RETURNING *`;
+        const valores = [nombre, descripcion, categoria, stock, precio, estado, id];
         const result = await pool.query(consulta, valores);
         if(result.rows.length === 0){
             return res.status(404).json({
                 exito: false,
-                mensaje: "no hay XD",
+                mensaje: "no hay objeto",
                 error: result.rows
             });
         }
@@ -76,7 +76,7 @@ export const updateProduct = async (req, res) => {
         console.log(error);
         res.status(500).json({
             exito: false,
-            mensaje: "error al crear usuario",
+            mensaje: "error al actualizar",
             error: error.message
         })
     }

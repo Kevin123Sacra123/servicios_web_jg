@@ -1,3 +1,5 @@
+"use client"
+
 import Navegador from "@/components/Navegador_admin"
 import { Button } from "@/components/ui/button"
 import { Field, FieldLabel } from "@/components/ui/field";
@@ -17,8 +19,39 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { MdPersonSearch } from "react-icons/md";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { MdOutlineVerified } from "react-icons/md";
+import { useRef, useState } from "react";;
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Principal() {
+    const [evento, setevento] = useState({
+            nombre : "",
+            descripcion : "",
+            fecha : "",
+            hora_inicio : "",
+            hora_fin : "",
+            lugar: "",
+            capacidad : 0,
+        });
+    
+        const form = useRef(null);
+        const router = useRouter();
+    
+        const handleChange = (e) => {
+            setevento({
+                ...evento,
+                [e.target.name]: e.target.value,
+            });
+        };
+    
+        const handleSumbit = async (e) => {
+            e.preventDefault();
+            const res = await axios.post('http://localhost:4000/evento/crear', evento);
+            console.log(res)
+            router.refresh(); 
+            router.push('/admin/eventos');
+        };
+
     return (
         <div className="flex min-h-full bg-gray-100">
             <Navegador />
