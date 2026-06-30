@@ -1,6 +1,6 @@
 import Navegador from "@/components/Navegador_estudiante";
 import Image from "next/image";
-import logo from '@/img/logo.png'
+import fondo_medico from '@/img/fondo_topico.jpg'
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Field } from "@/components/ui/field";
@@ -16,7 +16,7 @@ export default function Principal() {
             <section className="bg-slate-100 min-h-screen w-full flex justify-center">
                 <div className="">
                 <div className="relative h-80 min-w-full overflow-hidden rounded-b-xl">
-                    <Image src={logo} alt="Atención Médica" className="absolute inset-0 w-full h-full object-cover" />
+                    <Image src={fondo_medico} alt="Atención Médica" className="absolute inset-0 w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/75">
                     </div>
                     <div className="absolute bottom-14 left-10 text-white">

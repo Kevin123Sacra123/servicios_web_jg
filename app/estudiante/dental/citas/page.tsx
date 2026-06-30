@@ -16,6 +16,7 @@ import { Field,  FieldContent,  FieldDescription,  FieldLabel,  FieldTitle,} fro
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { TbDental } from "react-icons/tb";
 
 export default function Principal() {
     const [fechaSeleccionada, setFechaSeleccionada] = useState<Date>();
@@ -44,7 +45,7 @@ export default function Principal() {
     ];
 
     const [cita, setCita] = useState({
-        tipo : "psicologia",
+        tipo : "dental",
         fecha: "",
         hora: "",
         estado: "pendiente",
@@ -66,7 +67,7 @@ export default function Principal() {
         try{
             const res = await axios.post('http://localhost:4000/cita/crear_cita', cita);
             router.refresh(); 
-            router.push('/estudiante/psicologia');
+            router.push('/estudiante/dental');
             console.log(res)
         }catch(error){
             console.log(error)
@@ -94,8 +95,8 @@ export default function Principal() {
                         <div>
                             <h2 className="text-sm font-semibold text-gray-700 mb-1">Seleccionar Especialista</h2>
                             <p className="text-xs text-gray-400 mb-4">Elige el profesional para tu atención.</p>
-                            <div>
-                                <RadioGroup className="" value={cita.personal}
+                            <div className="flex items-center justify-between">
+                                <RadioGroup className="space-y-4" value={cita.personal}
                                     onValueChange={(value) =>
                                         setCita({
                                         ...cita,
@@ -110,14 +111,14 @@ export default function Principal() {
                                                     <div className="flex items-center justify-between">
                                                         <div className="flex gap-3 items-center hover:border-blue-700">
                                                             <div className="w-15 h-15 bg-white border rounded-lg flex items-center justify-center hover:border-blue-700">
-                                                                <GiBrain className="hover:text-blue-900 text-4xl" />
+                                                                <TbDental className="text-blue-900 text-4xl" />
                                                             </div>
                                                             <div>
                                                                 <p className="font-semibold hover:text-blue-900 text-xl">{esp.nombre}</p>
                                                                 <p className="text-sm text-gray-500">{esp.especialidad}</p>
                                                             </div>
                                                         </div>
-                                                        <RadioGroupItem value={esp.nombre} id={`especialista-${esp.id}`} className="data-[state=checked]:bg-blue-700 data-[state=checked]:border-blue-700" />
+                                                        <RadioGroupItem value={esp.nombre} id={`especialista-${esp.id}`} className="data-[state=checked]:bg-blue-700 data-[state=checked]:border-blue-700"/>
                                                     </div>
                                                 </div>
                                             </FieldContent>

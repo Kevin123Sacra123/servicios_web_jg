@@ -1,20 +1,9 @@
 "use client"
 
 import Navegador from "@/components/Navegador_bazar";
-import { Field, FieldGroup, FieldLabel, FieldSet, FieldLegend, FieldDescription, FieldContent, FieldTitle } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import {Textarea} from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { Label } from "@/components/ui/label"
-import { FaFloppyDisk } from "react-icons/fa6";
 import { useRef, useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import Select_categorias from "@/components/Select_categorias";
-import Link from "next/link";
 import axios from "axios";
-import logo from '@/img/logo.png'
-import { Select, SelectContent, SelectGroup, SelectItem, SelectSeparator, SelectTrigger, SelectValue} from "@/components/ui/select"
 import Data_form from "./Data_form";
 
 
@@ -73,7 +62,6 @@ function Principal() {
 
                     <form action="" onSubmit={handleSumbit} ref={form} >
                         <Data_form productID={1}/>
-                        
                     </form>
                 </div>
             </div>

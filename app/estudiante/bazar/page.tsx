@@ -5,8 +5,16 @@ import logo from '@/img/logo.png'
 import { CiCirclePlus } from "react-icons/ci";
 import { Input } from "@/components/ui/input";
 import { MdOutlineFavorite } from "react-icons/md";
+import axios from "axios";
+import Link from "next/link";
 
-export default function Principal() {
+async function loadProducts() {
+  const { data } = await axios.get('http://localhost:4000/bazar/inventario')
+  return data;
+}
+
+async function Principal() {
+    const productos = await loadProducts();
     return(
         <div className="flex min-h-screen bg-gray-100">
             <Navegador />
@@ -20,23 +28,25 @@ export default function Principal() {
                         </Button>
                         <Button className="px-5 py-3 rounded-lg bg-slate-200 text-slate-600">Plantas</Button>
                     </div>
-                    <div className="flex gap-4 overflow-x-auto pb-4">
-                        <div className="min-w-[220px] bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
-                            <div className="relative h-56 bg-teal-400">
-                                <Image className="w-full h-full object-cover" src={logo} alt="Uniforme de Gala"/>
-                                <Button className="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white shadow flex items-center justify-center">
-                                    <MdOutlineFavorite className="text-blue-900" />
-                                </Button>
-                            </div>
-                            <div className="p-4">
-                                <h3 className="font-semibold text-slate-900">Uniforme de Gala</h3>
-                                <span className="text-gray-700 text-sm">uniforme azul</span>
-                                <div className="flex items-center justify-between mt-4">
-                                    <span className="text-blue-900 font-bold text-2xl">S/ 45.00</span>
-                                    <Button className="w-8 h-8 rounded-full bg-blue-900 text-white flex items-center justify-center">+</Button>
+                    <div className="grid grid-cols-6 gap-4 overflow-x-auto pb-4">
+                        {productos.map(product =>(
+                            <div key={product.id_product} className="min-w-[220px] bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+                                <div className="relative h-56 bg-teal-400">
+                                    <Image className="w-full h-full object-cover" src={logo} alt="Uniforme de Gala"/>
+                                    <Button className="absolute top-3 right-3 w-10 h-10 rounded-xl bg-white shadow flex items-center justify-center">
+                                        <MdOutlineFavorite className="text-blue-900" />
+                                    </Button>
+                                </div>
+                                <div className="p-4">
+                                    <h3 className="font-semibold text-slate-900">{product.nombre}</h3>
+                                    <span className="text-gray-700 text-sm">{product.descripcion}</span>
+                                    <div className="flex items-center justify-between mt-4">
+                                        <span className="text-blue-900 font-bold text-2xl">S/ {product.precio}</span>
+                                        <Link href={`/estudiante/bazar/${product.id_product}`} className="w-8 h-8 rounded-full bg-blue-900 text-white flex items-center justify-center">+</Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
                     <div className="mt-10">
                         <div className="bg-indigo-50 rounded-[30px] p-8 flex justify-between items-center">
@@ -52,3 +62,5 @@ export default function Principal() {
 
     )  
 };
+
+export default Principal;

@@ -7,11 +7,38 @@ export const getUsers = async (req, res) => {
 
 export const getUserID = async (req, res) => {
     const { id } = req.params;
-    const { rows } = await pool.query("SELECT * FROM public.usuarios WHERE id_User = $1", [id]);
+    const { rows } = await pool.query("SELECT * FROM public.usuarios WHERE id_usuarios = $1", [id]);
     if (rows.length === 0 ){
-        return res.status(404).json({mesage: "Usero no encontrado"});
+        return res.status(404).json({mesage: "Usuario no encontrado"});
     }
     res.json(rows);
+}
+
+export const getUserLogin = async (req, res) => {
+    try{
+        const { correo, password } = req.body;
+        if (!correo || !password){
+            return res.status(400).json({
+                exito: false,
+                mensaje: "los campos son obligatorios",
+            });
+        }
+        const consulta = `SELECT id_usuarios, rol FROM public.usuarios WHERE correo = $1 and password = $2 `;
+        const valores = [correo, password];
+        const result = await pool.query(consulta, valores);
+        res.status(201).json({
+            exito: true,
+            mensaje: "login",
+            error: result.rows[0]
+        });
+    }catch(error){
+        console.log(error);
+        res.status(500).json({
+            exito: false,
+            mensaje: "error al ingresar",
+            error: error.message
+        })
+    }
 }
 
 export const createUser = async (req, res) => {

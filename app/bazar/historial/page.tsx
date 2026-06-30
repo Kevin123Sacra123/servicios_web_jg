@@ -48,7 +48,6 @@ export default function Principal() {
                                 <Button variant={"outline"} aria-label="Buscar">
                                     <FaMagnifyingGlass />
                                 </Button>
-
                             </ButtonGroup>
                         </Field>
                         <div className="flex items-center gap-2 font-semibold">
